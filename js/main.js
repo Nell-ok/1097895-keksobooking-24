@@ -19,14 +19,45 @@ function returnRandomFractionalNumber(from, to, numberOfCharacters) {
 
 returnRandomFractionalNumber(10, 100, 1);
 
+function getRandomArrayElement(elements) {
+  return elements[returnRandomNumber(0, elements.length - 1)];
+}
+
 const AVATARS = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
-const PRICES = [1000, 2000, 3000, 4000];
+const TITLES = ['Сдам жилье!', 'Сдам помещение.', 'Сдам в аренду дом.'];
+const MIN_PRICE = 1000;
+const MAX_PRICE = 10000;
 const TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
-const ROOMS = [1, 2, 3, 4, 5];
-const GUESTS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const MIN_ROOMS = 1;
+const MAX_ROOMS = 5;
+const MIN_GUESTS = 1;
+const MAX_GUESTS = 10;
 const TIME = ['12:00', '13:00', '14:00'];
 const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const DESCRIPTIONS = ['Отличный ремонт по индивидуальному проекту.', 'С видом на море!', 'Школа в шаговой доступности.'];
 const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
+
+function getRandomFeatures(copyFeatures) {
+  copyFeatures = FEATURES.slice();
+  for (let i = copyFeatures.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    const temp = copyFeatures[i];
+    copyFeatures[i] = copyFeatures[j];
+    copyFeatures[j] = temp;
+  }
+  return copyFeatures;
+}
+
+function getRandomPhotos(copyPhotos) {
+  copyPhotos = PHOTOS.slice();
+  for (let i = copyPhotos.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    const temp = copyPhotos[i];
+    copyPhotos[i] = copyPhotos[j];
+    copyPhotos[j] = temp;
+  }
+  return copyPhotos;
+}
 
 const createOffer = () => {
   const latFractionalNamber = returnRandomFractionalNumber(35.65000, 35.70000, 5);
@@ -34,25 +65,17 @@ const createOffer = () => {
   return {
     author: `img/avatars/user${AVATARS[returnRandomNumber(0, AVATARS.length - 1)]}.png`,
     offer: {
-      title: 'Сдам жилье!',
+      title: getRandomArrayElement(TITLES),
       addres: `${latFractionalNamber}, ${lngFractionalNamber}`,
-      price: PRICES[returnRandomNumber(0, PRICES.length - 1)],
-      type: TYPES[returnRandomNumber(0, TYPES.length - 1)],
-      rooms: ROOMS[returnRandomNumber(0, ROOMS.length - 1)],
-      guests: GUESTS[returnRandomNumber(0, GUESTS.length - 1)],
-      checkin: TIME[returnRandomNumber(0, TIME.length - 1)],
-      checkout: TIME[returnRandomNumber(0, TIME.length - 1)],
-      features () {
-        const maxLength = FEATURES.length;
-        const lengthNewFeatures = returnRandomNumber(1, maxLength);
-        return Array.from({length: lengthNewFeatures}, FEATURES[returnRandomNumber(0, FEATURES.length - 1)]);
-      },
-      description: 'Отличный ремонт по индивидуальному проекту.',
-      photos () {
-        const maxLength = PHOTOS.length;
-        const lengthNewFeatures = returnRandomNumber(1, maxLength);
-        return Array.from({length: lengthNewFeatures}, PHOTOS[returnRandomNumber(0, PHOTOS.length - 1)]);
-      },
+      price: returnRandomNumber(MIN_PRICE, MAX_PRICE),
+      type: getRandomArrayElement(TYPES),
+      rooms: returnRandomNumber(MIN_ROOMS, MAX_ROOMS),
+      guests: returnRandomNumber(MIN_GUESTS, MAX_GUESTS),
+      checkin: getRandomArrayElement(TIME),
+      checkout: getRandomArrayElement(TIME),
+      features: getRandomFeatures(),
+      description: getRandomArrayElement(DESCRIPTIONS),
+      photos: getRandomPhotos(),
     },
     location: {
       lat: latFractionalNamber,
@@ -61,6 +84,6 @@ const createOffer = () => {
   };
 };
 
-const similarOffer = Array.from({length: 10}, createOffer);
-
-similarOffer();
+const LENGTH_NEW_ARRAY = 10;
+// eslint-disable-next-line
+const similarOffers = Array.from({length: LENGTH_NEW_ARRAY}, createOffer);
