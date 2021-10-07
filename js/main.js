@@ -37,26 +37,16 @@ const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'condit
 const DESCRIPTIONS = ['Отличный ремонт по индивидуальному проекту.', 'С видом на море!', 'Школа в шаговой доступности.'];
 const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 
-function getRandomFeatures(copyFeatures) {
-  copyFeatures = FEATURES.slice();
-  for (let i = copyFeatures.length - 1; i > 0; i--) {
+function shuffleArray(array) {
+  const copyArray = array.slice();
+  for (let i = copyArray.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
-    const temp = copyFeatures[i];
-    copyFeatures[i] = copyFeatures[j];
-    copyFeatures[j] = temp;
+    const temp = copyArray[i];
+    copyArray[i] = copyArray[j];
+    copyArray[j] = temp;
   }
-  return copyFeatures;
-}
-
-function getRandomPhotos(copyPhotos) {
-  copyPhotos = PHOTOS.slice();
-  for (let i = copyPhotos.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    const temp = copyPhotos[i];
-    copyPhotos[i] = copyPhotos[j];
-    copyPhotos[j] = temp;
-  }
-  return copyPhotos;
+  copyArray.length = returnRandomNumber(0, copyArray.length);
+  return copyArray;
 }
 
 const createOffer = () => {
@@ -73,9 +63,9 @@ const createOffer = () => {
       guests: returnRandomNumber(MIN_GUESTS, MAX_GUESTS),
       checkin: getRandomArrayElement(TIME),
       checkout: getRandomArrayElement(TIME),
-      features: getRandomFeatures(),
+      features: shuffleArray(FEATURES),
       description: getRandomArrayElement(DESCRIPTIONS),
-      photos: getRandomPhotos(),
+      photos: shuffleArray(PHOTOS),
     },
     location: {
       lat: latFractionalNamber,
