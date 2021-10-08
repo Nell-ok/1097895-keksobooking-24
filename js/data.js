@@ -2,6 +2,11 @@ import {returnRandomNumber, returnRandomFractionalNumber, getRandomArrayElement,
 
 const AVATARS = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
 const TITLES = ['Сдам жилье!', 'Сдам помещение.', 'Сдам в аренду дом.'];
+const LAT_LATITUDE = 35.65000;
+const LAT_LONGITUDE = 35.70000;
+const LNG_LATITUDE = 139.70000;
+const LNG_LONGITUDE = 139.80000;
+const BIGEST_NUMBER = 5;
 const MIN_PRICE = 1000;
 const MAX_PRICE = 10000;
 const TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
@@ -13,10 +18,11 @@ const TIME = ['12:00', '13:00', '14:00'];
 const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const DESCRIPTIONS = ['Отличный ремонт по индивидуальному проекту.', 'С видом на море!', 'Школа в шаговой доступности.'];
 const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
+const LENGTH_NEW_ARRAY = 10;
 
 const createOffer = () => {
-  const latFractionalNamber = returnRandomFractionalNumber(35.65000, 35.70000, 5);
-  const lngFractionalNamber = returnRandomFractionalNumber(139.70000, 139.80000, 5);
+  const latFractionalNamber = returnRandomFractionalNumber(LAT_LATITUDE, LAT_LONGITUDE, BIGEST_NUMBER);
+  const lngFractionalNamber = returnRandomFractionalNumber(LNG_LATITUDE, LNG_LONGITUDE, BIGEST_NUMBER);
   return {
     author: `img/avatars/user${AVATARS[returnRandomNumber(0, AVATARS.length - 1)]}.png`,
     offer: {
@@ -39,6 +45,5 @@ const createOffer = () => {
   };
 };
 
-const LENGTH_NEW_ARRAY = 10;
 // eslint-disable-next-line
 const similarOffers = Array.from({length: LENGTH_NEW_ARRAY}, createOffer);
