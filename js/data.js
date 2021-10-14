@@ -18,7 +18,7 @@ const TIME = ['12:00', '13:00', '14:00'];
 const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const DESCRIPTIONS = ['Отличный ремонт по индивидуальному проекту.', 'С видом на море!', 'Школа в шаговой доступности.'];
 const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
-const LENGTH_NEW_ARRAY = 10;
+const LENGTH_NEW_ARRAY = 1;
 
 const createOffer = () => {
   const latFractionalNamber = returnRandomFractionalNumber(LAT_LATITUDE, LAT_LONGITUDE, BIGEST_NUMBER);
@@ -45,5 +45,6 @@ const createOffer = () => {
   };
 };
 
-// eslint-disable-next-line
-const similarOffers = Array.from({length: LENGTH_NEW_ARRAY}, createOffer);
+const createOffers = () => new Array(LENGTH_NEW_ARRAY).fill(null).map(() => createOffer());
+
+export {createOffers};
