@@ -14,7 +14,7 @@ const CAPTIONS = {
 
 const similarOffers = createOffers();
 
-similarOffers.forEach((newItem) => {
+function createPopup (newItem) {
   const newPopup = popup.cloneNode(true);
   const popupFeatures = newPopup.querySelector('.popup__features');
   const featureList = popupFeatures.querySelectorAll('.popup__feature');
@@ -40,4 +40,6 @@ similarOffers.forEach((newItem) => {
   newPopup.querySelector('.popup__avatar').src = newItem.author;
 
   mapCanvasElement.appendChild(newPopup);
-});
+}
+
+createPopup(similarOffers[0]);
