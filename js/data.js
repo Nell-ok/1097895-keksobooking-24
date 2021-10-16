@@ -27,7 +27,7 @@ const createOffer = () => {
     author: `img/avatars/user${AVATARS[returnRandomNumber(0, AVATARS.length - 1)]}.png`,
     offer: {
       title: getRandomArrayElement(TITLES),
-      addres: `${latFractionalNamber}, ${lngFractionalNamber}`,
+      address: `${latFractionalNamber}, ${lngFractionalNamber}`,
       price: returnRandomNumber(MIN_PRICE, MAX_PRICE),
       type: getRandomArrayElement(TYPES),
       rooms: returnRandomNumber(MIN_ROOMS, MAX_ROOMS),

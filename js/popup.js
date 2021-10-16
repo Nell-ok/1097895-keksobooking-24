@@ -16,9 +16,19 @@ const similarOffers = createOffers();
 
 const createPopup = (newItem) => {
   const newPopup = popupElement.cloneNode(true);
+  const titleElement = newPopup.querySelector('.popup__title');
+  const addressElement = newPopup.querySelector('.popup__text--address');
+  const priceElement = newPopup.querySelector('.popup__text--price');
+  const typeElement = newPopup.querySelector('.popup__type');
+  const capacityElement = newPopup.querySelector('.popup__text--capacity');
+  const timeElement = newPopup.querySelector('.popup__text--time');
+  const descriptionElement = newPopup.querySelector('.popup__description');
+  const avatarElement = newPopup.querySelector('.popup__avatar');
+
   const popupFeatures = newPopup.querySelector('.popup__features');
   const featureList = popupFeatures.querySelectorAll('.popup__feature');
   const newFeatures = newItem.offer.features;
+
   const popupPhotos = newPopup.querySelector('.popup__photos');
   const photoElement = popupPhotos.querySelector('.popup__photo');
   const newPhotosArray = newItem.offer.photos;
@@ -46,14 +56,14 @@ const createPopup = (newItem) => {
     }
   });
 
-  newPopup.querySelector('.popup__title').textContent = newItem.offer.title;
-  newPopup.querySelector('.popup__text--address').textContent = newItem.offer.addres;
-  newPopup.querySelector('.popup__text--price').textContent = `${newItem.offer.price} ₽/ночь`;
-  newPopup.querySelector('.popup__type').textContent = getCaption(newItem.offer.type);
-  newPopup.querySelector('.popup__text--capacity').textContent = `${newItem.offer.rooms} комнаты для ${newItem.offer.guests} гостей`;
-  newPopup.querySelector('.popup__text--time').textContent = `Заезд после ${newItem.offer.checkin}, выезд до ${newItem.offer.checkout}`;
-  newPopup.querySelector('.popup__description').textContent = newItem.offer.description;
-  newPopup.querySelector('.popup__avatar').src = newItem.author;
+  newItem.offer.title ? titleElement.textContent = newItem.offer.title : titleElement.remove();
+  newItem.offer.address ? addressElement.textContent = newItem.offer.address : addressElement.remove();
+  newItem.offer.price ? priceElement.textContent = `${newItem.offer.price} ₽/ночь` : priceElement.remove();
+  newItem.offer.type ? typeElement.textContent = getCaption(newItem.offer.type) : typeElement.remove();
+  newItem.offer.rooms || newItem.offer.guests ? capacityElement.textContent = `${newItem.offer.rooms} комнаты для ${newItem.offer.guests} гостей` : capacityElement.remove();
+  newItem.offer.checkin || newItem.offer.checkout ? timeElement.textContent = `Заезд после ${newItem.offer.checkin}, выезд до ${newItem.offer.checkout}` : timeElement.remove();
+  newItem.offer.description ? descriptionElement.textContent = newItem.offer.description : descriptionElement.remove();
+  newItem.author ? avatarElement.src = newItem.author : avatarElement.remove();
 
   mapCanvasElement.appendChild(newPopup);
 };
