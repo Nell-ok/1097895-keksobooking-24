@@ -11,10 +11,9 @@ const mapFilter = document.querySelector('.map__filters');
 const mapFilterElements = mapFilter.querySelectorAll('.map__filter');
 const mapFeaturesFilter = mapFilter.querySelector('.map__features');
 
+const adFormButton = document.querySelector('.ad-form__submit');
 const selectRooms = document.querySelector('[name="rooms"]');
 const selectCapacity = document.querySelector('[name="capacity"]');
-const valueRoom = +selectRooms.value;
-const valueCapacity = +selectCapacity.value;
 
 const setFormDisabled = () => {
   adForm.setAttribute('disabled', 'disabled');
@@ -80,10 +79,11 @@ inputPrice.addEventListener('input', () => {
 });
 
 const onCreateDependency = () => {
+  const valueRoom = +selectRooms.value;
+  const valueCapacity = +selectCapacity.value;
   if ((valueRoom !== 100 && valueCapacity !== 0) && (valueRoom < valueCapacity)) {
     selectRooms.setCustomValidity('Количество комнат не соответствует количеству гостей');
   } else if (valueRoom === 100 && valueCapacity !== 0 || valueCapacity === 0 && valueRoom !== 100) {
-
     selectRooms.setCustomValidity('Не для гостей');
   } else {
     selectRooms.setCustomValidity('');
@@ -93,3 +93,7 @@ const onCreateDependency = () => {
 
 selectRooms.addEventListener('change', onCreateDependency);
 selectCapacity.addEventListener('change', onCreateDependency);
+
+adFormButton.addEventListener('click', () => {
+  onCreateDependency();
+});
