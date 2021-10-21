@@ -11,6 +11,11 @@ const mapFilter = document.querySelector('.map__filters');
 const mapFilterElements = mapFilter.querySelectorAll('.map__filter');
 const mapFeaturesFilter = mapFilter.querySelector('.map__features');
 
+const selectRooms = document.querySelector('[name="rooms"]');
+const selectCapacity = document.querySelector('[name="capacity"]');
+const valueRoom = +selectRooms.value;
+const valueCapacity = +selectCapacity.value;
+
 const setFormDisabled = () => {
   adForm.setAttribute('disabled', 'disabled');
   adForm.classList.add('ad-form--disabled');
@@ -74,47 +79,17 @@ inputPrice.addEventListener('input', () => {
   inputPrice.reportValidity();
 });
 
-const selectRooms = document.querySelector('[name="rooms"]');
-const selectCapacity = document.querySelector('[name="capacity"]');
+const onCreateDependency = () => {
+  if ((valueRoom !== 100 && valueCapacity !== 0) && (valueRoom < valueCapacity)) {
+    selectRooms.setCustomValidity('Количество комнат не соответствует количеству гостей');
+  } else if (valueRoom === 100 && valueCapacity !== 0 || valueCapacity === 0 && valueRoom !== 100) {
 
-selectRooms.addEventListener('change', () => {
-  if(selectRooms.options[0].selected) {
-    selectCapacity.options[0].setAttribute('disabled', 'disabled');
-    selectCapacity.options[1].setAttribute('disabled', 'disabled');
-    selectCapacity.options[3].setAttribute('disabled', 'disabled');
-    selectCapacity.options[2].removeAttribute('disabled', 'disabled');
-  } else if(selectRooms.options[1].selected) {
-    selectCapacity.options[0].setAttribute('disabled', 'disabled');
-    selectCapacity.options[1].removeAttribute('disabled', 'disabled');
-    selectCapacity.options[3].setAttribute('disabled', 'disabled');
-    selectCapacity.options[2].removeAttribute('disabled', 'disabled');
-  } else if(selectRooms.options[2].selected) {
-    selectCapacity.options[0].removeAttribute('disabled', 'disabled');
-    selectCapacity.options[1].removeAttribute('disabled', 'disabled');
-    selectCapacity.options[3].setAttribute('disabled', 'disabled');
-    selectCapacity.options[2].removeAttribute('disabled', 'disabled');
-  } else if(selectRooms.options[3].selected) {
-    selectCapacity.options[3].removeAttribute('disabled', 'disabled');
-    selectCapacity.options[0].setAttribute('disabled', 'disabled');
-    selectCapacity.options[2].setAttribute('disabled', 'disabled');
-    selectCapacity.options[1].setAttribute('disabled', 'disabled');
+    selectRooms.setCustomValidity('Не для гостей');
+  } else {
+    selectRooms.setCustomValidity('');
   }
-});
-
-/*const createDependency = (roomElement, capacityElement) => {
-  const valueRoom = +roomElement.value;
-  for (let j = 0; j < capacityElement.options.length; j++) {
-    const valueCapacity = +capacityElement.options[j].value;
-    if (valueRoom !== 0 && valueCapacity !== 100 && valueRoom > valueCapacity) {
-      roomElement.setCustomValidity('Количество комнат не соответствует количеству гостей');
-    } else if (valueRoom !== 0 && valueCapacity === 100) {
-      roomElement.setCustomValidity('Не для гостей');
-    } else {
-      roomElement.setCustomValidity('');
-    }
-  }
-  roomElement.reportValidity();
+  selectRooms.reportValidity();
 };
 
-selectRooms.addEventListener('change', createDependency(selectRooms, selectCapacity));
-selectCapacity.addEventListener('change', createDependency(selectRooms, selectCapacity));*/
+selectRooms.addEventListener('change', onCreateDependency);
+selectCapacity.addEventListener('change', onCreateDependency);
