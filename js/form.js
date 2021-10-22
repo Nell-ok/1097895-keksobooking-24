@@ -1,6 +1,16 @@
 const MIN_LENGTH_TITLE = 30;
 const MAX_LENGTH_TITLE = 100;
 const MAX_PRICE = 1000000;
+const NUMBER_ROOMS = 100;
+
+const MIN_PRICE_TYPE = {
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000,
+};
+
 const inputTitle = document.querySelector('[name="title"]');
 const inputPrice = document.querySelector('[name="price"]');
 
@@ -14,6 +24,10 @@ const mapFeaturesFilter = mapFilter.querySelector('.map__features');
 const adFormButton = document.querySelector('.ad-form__submit');
 const selectRooms = document.querySelector('[name="rooms"]');
 const selectCapacity = document.querySelector('[name="capacity"]');
+const selectType = document.querySelector('[name="type"]');
+const selectTimein = document.querySelector('[name="timein"]');
+const selectTimeout = document.querySelector('[name="timeout"]');
+
 
 const setFormDisabled = () => {
   adForm.setAttribute('disabled', 'disabled');
@@ -78,12 +92,26 @@ inputPrice.addEventListener('input', () => {
   inputPrice.reportValidity();
 });
 
-const onCreateDependency = () => {
+selectType.addEventListener('change', () => {
+  const minPrice = MIN_PRICE_TYPE[selectType.value];
+  inputPrice.setAttribute('placeholder', minPrice);
+  inputPrice.setAttribute('min', minPrice);
+});
+
+selectTimein.addEventListener('change', () => {
+  selectTimeout.value = selectTimein.value;
+});
+
+selectTimeout.addEventListener('change', () => {
+  selectTimein.value = selectTimeout.value;
+});
+
+const onRoomsCapacityChange = () => {
   const valueRoom = +selectRooms.value;
   const valueCapacity = +selectCapacity.value;
-  if ((valueRoom !== 100 && valueCapacity !== 0) && (valueRoom < valueCapacity)) {
+  if ((valueRoom !== NUMBER_ROOMS && valueCapacity !== 0) && (valueRoom < valueCapacity)) {
     selectRooms.setCustomValidity('Количество комнат не соответствует количеству гостей');
-  } else if (valueRoom === 100 && valueCapacity !== 0 || valueCapacity === 0 && valueRoom !== 100) {
+  } else if (valueRoom === NUMBER_ROOMS && valueCapacity !== 0 || valueCapacity === 0 && valueRoom !== NUMBER_ROOMS) {
     selectRooms.setCustomValidity('Не для гостей');
   } else {
     selectRooms.setCustomValidity('');
@@ -91,9 +119,9 @@ const onCreateDependency = () => {
   selectRooms.reportValidity();
 };
 
-selectRooms.addEventListener('change', onCreateDependency);
-selectCapacity.addEventListener('change', onCreateDependency);
+selectRooms.addEventListener('change', onRoomsCapacityChange);
+selectCapacity.addEventListener('change', onRoomsCapacityChange);
 
 adFormButton.addEventListener('click', () => {
-  onCreateDependency();
+  onRoomsCapacityChange();
 });
