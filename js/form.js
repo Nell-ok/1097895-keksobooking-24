@@ -3,7 +3,7 @@ const MAX_LENGTH_TITLE = 100;
 const MAX_PRICE = 1000000;
 const NUMBER_ROOMS = 100;
 
-const MIN_PRICE_TYPE = {
+const minPriceOnType = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
@@ -93,7 +93,7 @@ inputPrice.addEventListener('input', () => {
 });
 
 selectType.addEventListener('change', () => {
-  const minPrice = MIN_PRICE_TYPE[selectType.value];
+  const minPrice = minPriceOnType[selectType.value];
   inputPrice.setAttribute('placeholder', minPrice);
   inputPrice.setAttribute('min', minPrice);
 });
