@@ -13,6 +13,7 @@ const minPriceOnType = {
 
 const inputTitle = document.querySelector('[name="title"]');
 const inputPrice = document.querySelector('[name="price"]');
+const inputAddress = document.querySelector('[name="address"]');
 
 const adForm = document.querySelector('.ad-form');
 const adFormElements = adForm.querySelectorAll('.ad-form__element');
@@ -66,9 +67,6 @@ const setFormActive = () => {
   mapFeaturesFilter.removeAttribute('disabled', 'disabled');
   mapFeaturesFilter.classList.remove('map__features--disabled');
 };
-
-setFormDisabled();
-setFormActive();
 
 inputTitle.addEventListener('input', () => {
   const valueLength = inputTitle.value.length;
@@ -125,3 +123,5 @@ selectCapacity.addEventListener('change', onRoomsCapacityChange);
 adFormButton.addEventListener('click', () => {
   onRoomsCapacityChange();
 });
+
+export { setFormDisabled, setFormActive, inputAddress };
