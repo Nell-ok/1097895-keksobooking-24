@@ -56,7 +56,7 @@ const createPopup = (newItem) => {
   newItem.offer.rooms || newItem.offer.guests ? capacityElement.textContent = `${newItem.offer.rooms} комнаты для ${newItem.offer.guests} гостей` : capacityElement.remove();
   newItem.offer.checkin || newItem.offer.checkout ? timeElement.textContent = `Заезд после ${newItem.offer.checkin}, выезд до ${newItem.offer.checkout}` : timeElement.remove();
   newItem.offer.description ? descriptionElement.textContent = newItem.offer.description : descriptionElement.remove();
-  newItem.author ? avatarElement.src = newItem.author : avatarElement.remove();
+  newItem.author.avatar ? avatarElement.src = newItem.author.avatar : avatarElement.remove();
 
   return newPopup;
 };
