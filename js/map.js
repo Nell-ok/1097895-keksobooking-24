@@ -1,5 +1,6 @@
 import { setFormDisabled, setFormActive, inputAddress } from './form.js';
 import { createPopup } from './popup.js';
+import { getData } from './api.js';
 
 const LATITUDE_COORDINATE = 35.6895;
 const LONGITUDE_COORDINATE = 139.692;
@@ -55,13 +56,16 @@ mainPinMarker.on('moveend', (evt) => {
   inputAddress.value = `Lat: ${latitudeCoordinate}, Lng: ${longitudeCoordinate}`;
 });
 
+const pinIcon = L.icon({
+  iconUrl: 'img/pin.svg',
+  iconSize: PIN_SIZE,
+  iconAnchor: PIN_ANCHOR,
+});
+
+const layerGroup = L.layerGroup().addTo(mapCanvas);
+
 const createOffers = (similarOffers) => {
   similarOffers.forEach((offer) => {
-    const pinIcon = L.icon({
-      iconUrl: 'img/pin.svg',
-      iconSize: PIN_SIZE,
-      iconAnchor: PIN_ANCHOR,
-    });
     const pinMarker = L.marker(
       {
         lat: offer.location.lat,
@@ -73,12 +77,16 @@ const createOffers = (similarOffers) => {
     );
 
     pinMarker
-      .addTo(mapCanvas)
+      .addTo(layerGroup)
       .bindPopup(createPopup(offer));
   });
 };
 
 const returnMapBack = () => {
+  layerGroup.clearLayers();
+  getData((offers) => {
+    createOffers(offers);
+  });
   mapCanvas.setView({
     lat: LATITUDE_COORDINATE,
     lng: LONGITUDE_COORDINATE,
@@ -93,4 +101,3 @@ const returnMapBack = () => {
 };
 
 export { createOffers, returnMapBack };
-
