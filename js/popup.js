@@ -16,6 +16,9 @@ const createPopup = (newItem) => {
   const photoElement = popupPhotos.querySelector('.popup__photo');
   const popupFragment = document.createDocumentFragment();
 
+  const newFeatures = newItem.offer.features;
+  const newPhotosArray = newItem.offer.photos;
+
   const captionsOfType = {
     palace: 'Дворец для palace',
     flat: 'Квартира для flat',
@@ -24,30 +27,36 @@ const createPopup = (newItem) => {
     hotel: 'Отель для hotel',
   };
 
-  const newFeatures = newItem.offer.features;
-  const newPhotosArray = newItem.offer.photos;
-
-  for (let i = 0; i < newPhotosArray.length; i++) {
-    const newPhotoElement = document.createElement('img');
-    newPhotoElement.classList.add('popup__photo');
-    newPhotoElement.src = newPhotosArray[i];
-    newPhotoElement.alt = 'Фотография жилья';
-    newPhotoElement.width = 45;
-    newPhotoElement.height = 40;
-    popupFragment.appendChild(newPhotoElement);
-  }
-
-  popupPhotos.appendChild(popupFragment);
-  photoElement.remove();
-
   const getCaption = (name) => captionsOfType[name];
 
-  featureList.forEach((item) => {
-    const isNecessary = newFeatures.some((feature) => item.classList.contains(`popup__feature--${feature}`));
-    if (!isNecessary) {
-      item.remove();
+  if (newPhotosArray === undefined) {
+    popupPhotos.remove;
+  } else {
+    for (let i = 0; i < newPhotosArray.length; i++) {
+      const newPhotoElement = document.createElement('img');
+      newPhotoElement.classList.add('popup__photo');
+      newPhotoElement.src = newPhotosArray[i];
+      newPhotoElement.alt = 'Фотография жилья';
+      newPhotoElement.width = 45;
+      newPhotoElement.height = 40;
+      popupFragment.appendChild(newPhotoElement);
     }
-  });
+
+    popupPhotos.appendChild(popupFragment);
+    photoElement.remove();
+  }
+
+  if (newFeatures === undefined) {
+    featureList.remove;
+  } else {
+    featureList.forEach((item) => {
+      const isNecessary = newFeatures.some((feature) => item.classList.contains(`popup__feature--${feature}`));
+      if (!isNecessary) {
+        item.remove();
+      }
+    });
+  }
+
 
   newItem.offer.title ? titleElement.textContent = newItem.offer.title : titleElement.remove();
   newItem.offer.address ? addressElement.textContent = newItem.offer.address : addressElement.remove();

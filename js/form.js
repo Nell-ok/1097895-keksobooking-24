@@ -1,3 +1,7 @@
+import { showMessageSuccess, showMessageError, closeMessageSuccess, closeMessageError } from './tooltip.js';
+import { returnMapBack } from './map.js';
+import { sendData } from './api.js';
+
 const MIN_LENGTH_TITLE = 30;
 const MAX_LENGTH_TITLE = 100;
 const MAX_PRICE = 1000000;
@@ -14,22 +18,19 @@ const minPriceOnType = {
 const inputTitle = document.querySelector('[name="title"]');
 const inputPrice = document.querySelector('[name="price"]');
 const inputAddress = document.querySelector('[name="address"]');
-
 const adForm = document.querySelector('.ad-form');
 const adFormElements = adForm.querySelectorAll('.ad-form__element');
 const adFormHeaderElement = adForm.querySelector('.ad-form-header');
-const adFormButton = document.querySelector('.ad-form__submit');
-
+const adFormButtonSubmit = document.querySelector('.ad-form__submit');
+const adFormButtonReset = document.querySelector('.ad-form__reset');
 const mapFilter = document.querySelector('.map__filters');
 const mapFilterElements = mapFilter.querySelectorAll('.map__filter');
 const mapFeaturesFilter = mapFilter.querySelector('.map__features');
-
 const selectRooms = document.querySelector('[name="rooms"]');
 const selectCapacity = document.querySelector('[name="capacity"]');
 const selectType = document.querySelector('[name="type"]');
 const selectTimein = document.querySelector('[name="timein"]');
 const selectTimeout = document.querySelector('[name="timeout"]');
-
 
 const setFormDisabled = () => {
   adForm.setAttribute('disabled', 'disabled');
@@ -121,22 +122,34 @@ const onRoomsCapacityChange = () => {
 selectRooms.addEventListener('change', onRoomsCapacityChange);
 selectCapacity.addEventListener('change', onRoomsCapacityChange);
 
-adFormButton.addEventListener('click', () => {
+adFormButtonSubmit.addEventListener('click', () => {
   onRoomsCapacityChange();
 });
 
-adForm.addEventListener('submit', (evt) => {
+adFormButtonReset.addEventListener('click', (evt) => {
   evt.preventDefault();
-
-  const formData = new FormData(evt.target);
-
-  fetch(
-    'https://24.javascript.pages.academy/keksobooking',
-    {
-      method: 'POST',
-      body: formData,
-    },
-  );
+  adForm.reset();
+  returnMapBack();
 });
 
-export { setFormDisabled, setFormActive, inputAddress };
+const setAdFormSubmit = () => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => {
+        evt.target.reset();
+        returnMapBack();
+        showMessageSuccess();
+        closeMessageSuccess();
+      },
+      () => {
+        showMessageError();
+        closeMessageError();
+      },
+      new FormData(evt.target),
+    );
+  });
+};
+
+export { setFormDisabled, setFormActive, setAdFormSubmit, inputAddress };

@@ -78,5 +78,19 @@ const createOffers = (similarOffers) => {
   });
 };
 
-export { createOffers };
+const returnMapBack = () => {
+  mapCanvas.setView({
+    lat: LATITUDE_COORDINATE,
+    lng: LONGITUDE_COORDINATE,
+  }, MAP_ZOOM);
+
+  inputAddress.value = `Lat: ${LATITUDE_COORDINATE}, Lng: ${LONGITUDE_COORDINATE}`;
+
+  mainPinMarker.setLatLng({
+    lat: LATITUDE_COORDINATE,
+    lng: LONGITUDE_COORDINATE,
+  });
+};
+
+export { createOffers, returnMapBack };
 

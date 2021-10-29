@@ -1,4 +1,11 @@
 import './popup.js';
-import './map.js';
-import './form.js';
-import './api.js';
+import { createOffers } from './map.js';
+import { getData } from './api.js';
+import { setAdFormSubmit } from './form.js';
+import './tooltip.js';
+
+getData((offers) => {
+  createOffers(offers);
+});
+
+setAdFormSubmit();
