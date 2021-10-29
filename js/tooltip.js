@@ -1,3 +1,5 @@
+import { isEscapeKey } from './util.js';
+
 const templateSuccess = document.querySelector('#success').content;
 const templateError = document.querySelector('#error').content;
 const successElement = templateSuccess.querySelector('.success');
@@ -6,39 +8,42 @@ const newSuccessElement = successElement.cloneNode(true);
 const newErrorElement = errorElement.cloneNode(true);
 const errorButton = newErrorElement.querySelector('.error__button');
 
+const showMessage = (element) => {
+  document.body.appendChild(element);
+  element.classList.add('active');
+};
+
+const closeMessage = (element) => {
+  const onDocumentKeydown = document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      element.remove();
+      document.removeEventListener('keydown', onDocumentKeydown);
+    }
+  });
+  const onDocumentClick = document.body.addEventListener('click', () => {
+    element.remove();
+    document.body.removeEventListener('click', onDocumentClick);
+  });
+};
+
 const showMessageSuccess = () => {
-  document.body.appendChild(newSuccessElement);
-  newSuccessElement.classList.add('active');
+  showMessage(newSuccessElement);
 };
 
 const showMessageError = () => {
-  document.body.appendChild(newErrorElement);
-  newErrorElement.classList.add('active');
+  showMessage(newErrorElement);
 };
 
 const closeMessageSuccess = () => {
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      newSuccessElement.remove();
-    }
-  });
-  document.body.addEventListener('click', () => {
-    newSuccessElement.remove();
-  });
+  closeMessage(newSuccessElement);
 };
 
 const closeMessageError = () => {
   errorButton.addEventListener('click', () => {
     newErrorElement.remove();
   });
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      newErrorElement.remove();
-    }
-  });
-  document.body.addEventListener('click', () => {
-    newErrorElement.remove();
-  });
+  closeMessage(newErrorElement);
 };
 
 export { showMessageSuccess, showMessageError, closeMessageSuccess, closeMessageError };

@@ -29,7 +29,7 @@ const createPopup = (newItem) => {
 
   const getCaption = (name) => captionsOfType[name];
 
-  if (newPhotosArray === undefined) {
+  if (!newPhotosArray) {
     popupPhotos.remove;
   } else {
     for (let i = 0; i < newPhotosArray.length; i++) {
@@ -46,7 +46,7 @@ const createPopup = (newItem) => {
     photoElement.remove();
   }
 
-  if (newFeatures === undefined) {
+  if (!newFeatures) {
     featureList.remove;
   } else {
     featureList.forEach((item) => {
@@ -56,7 +56,6 @@ const createPopup = (newItem) => {
       }
     });
   }
-
 
   newItem.offer.title ? titleElement.textContent = newItem.offer.title : titleElement.remove();
   newItem.offer.address ? addressElement.textContent = newItem.offer.address : addressElement.remove();

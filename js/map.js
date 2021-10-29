@@ -82,7 +82,7 @@ const createOffers = (similarOffers) => {
   });
 };
 
-const returnMapBack = () => {
+const initMap = () => {
   layerGroup.clearLayers();
   getData((offers) => {
     createOffers(offers);
@@ -100,4 +100,4 @@ const returnMapBack = () => {
   });
 };
 
-export { createOffers, returnMapBack };
+export { createOffers, initMap };

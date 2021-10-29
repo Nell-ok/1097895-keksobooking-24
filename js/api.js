@@ -1,7 +1,10 @@
 import { showAlert } from './util.js';
 
+const SERVER_GET = 'https://24.javascript.pages.academy/keksobooking/data';
+const SERVER_POST = 'https://24.javascript.pages.academy/keksobooking';
+
 const getData = (onSuccess) => {
-  fetch('https://24.javascript.pages.academy/keksobooking/data')
+  fetch(SERVER_GET)
     .then((response) => response.json())
     .then((offers) => {
       onSuccess(offers);
@@ -13,17 +16,13 @@ const getData = (onSuccess) => {
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    'https://24.javascript.pages.academy/keksobooking',
+    SERVER_POST,
     {
       method: 'POST',
       body,
     },
   ).then((response) => {
-    if (response.ok) {
-      onSuccess();
-    } else {
-      onFail();
-    }
+    response.ok ? onSuccess() : onFail();
   })
     .catch(() => {
       onFail();

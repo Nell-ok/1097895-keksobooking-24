@@ -1,5 +1,5 @@
 import { showMessageSuccess, showMessageError, closeMessageSuccess, closeMessageError } from './tooltip.js';
-import { returnMapBack } from './map.js';
+import { initMap } from './map.js';
 import { sendData } from './api.js';
 
 const MIN_LENGTH_TITLE = 30;
@@ -129,8 +129,10 @@ adFormButtonSubmit.addEventListener('click', () => {
 adFormButtonReset.addEventListener('click', (evt) => {
   evt.preventDefault();
   adForm.reset();
-  returnMapBack();
+  initMap();
 });
+
+//сбросить фильтры
 
 const setAdFormSubmit = () => {
   adForm.addEventListener('submit', (evt) => {
@@ -139,7 +141,7 @@ const setAdFormSubmit = () => {
     sendData(
       () => {
         evt.target.reset();
-        returnMapBack();
+        initMap();
         showMessageSuccess();
         closeMessageSuccess();
       },
