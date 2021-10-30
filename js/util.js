@@ -1,36 +1,26 @@
-const returnRandomNumber = (from, to) => {
-  if (from < 0 || to <= from) {
-    return false;
-  }
+const ALERT_SHOW_TIME = 5000;
 
-  return Math.floor(Math.random() * (to - from + 1)) + from;
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
 };
 
-returnRandomNumber(10, 100);
-
-const returnRandomFractionalNumber = (from, to, numberOfCharacters) => {
-  if (from < 0 || to <= from) {
-    return false;
-  }
-
-  const randomNumber = Math.random() * (to - from + 1) + from;
-  return randomNumber.toFixed(numberOfCharacters);
-};
-
-returnRandomFractionalNumber(10, 100, 1);
-
-const getRandomArrayElement = (elements) => elements[returnRandomNumber(0, elements.length - 1)];
-
-const shuffleArray = (array) => {
-  const copyArray = array.slice();
-  for (let i = copyArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const temp = copyArray[i];
-    copyArray[i] = copyArray[j];
-    copyArray[j] = temp;
-  }
-  copyArray.length = returnRandomNumber(0, copyArray.length);
-  return copyArray;
-};
-
-export {returnRandomNumber, returnRandomFractionalNumber, getRandomArrayElement, shuffleArray};
+export { showAlert, isEscapeKey };
