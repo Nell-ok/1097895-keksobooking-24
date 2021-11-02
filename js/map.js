@@ -1,6 +1,7 @@
 import { setFormDisabled, setFormActive, inputAddress } from './form.js';
 import { createPopup } from './popup.js';
 import { getData } from './api.js';
+import { comparesValuesOffers } from './filter.js';
 
 const LATITUDE_COORDINATE = 35.6895;
 const LONGITUDE_COORDINATE = 139.692;
@@ -10,6 +11,7 @@ const MAIN_PIN_SIZE = [52, 52];
 const MAIN_PIN_ANCHOR = [26, 52];
 const PIN_SIZE = [40, 40];
 const PIN_ANCHOR = [20, 40];
+const SIMILAR_OFFER_COUNT = 10;
 
 setFormDisabled();
 
@@ -65,21 +67,23 @@ const pinIcon = L.icon({
 const layerGroup = L.layerGroup().addTo(mapCanvas);
 
 const createOffers = (similarOffers) => {
-  similarOffers.forEach((offer) => {
-    const pinMarker = L.marker(
-      {
-        lat: offer.location.lat,
-        lng: offer.location.lng,
-      },
-      {
-        icon: pinIcon,
-      },
-    );
+  similarOffers.filter(comparesValuesOffers)
+    .slice(0, SIMILAR_OFFER_COUNT)
+    .forEach((offer) => {
+      const pinMarker = L.marker(
+        {
+          lat: offer.location.lat,
+          lng: offer.location.lng,
+        },
+        {
+          icon: pinIcon,
+        },
+      );
 
-    pinMarker
-      .addTo(layerGroup)
-      .bindPopup(createPopup(offer));
-  });
+      pinMarker
+        .addTo(layerGroup)
+        .bindPopup(createPopup(offer));
+    });
 };
 
 const initMap = () => {
@@ -100,4 +104,4 @@ const initMap = () => {
   });
 };
 
-export { createOffers, initMap };
+export { createOffers, initMap, SIMILAR_OFFER_COUNT };
