@@ -1,4 +1,4 @@
-import { setFormDisabled, setFormActive, inputAddress } from './form.js';
+import { setFormDisabled, setFormActive, inputAddress, mapFilter } from './form.js';
 import { createPopup } from './popup.js';
 import { getData } from './api.js';
 import { comparesValuesOffers } from './filter.js';
@@ -12,6 +12,7 @@ const MAIN_PIN_ANCHOR = [26, 52];
 const PIN_SIZE = [40, 40];
 const PIN_ANCHOR = [20, 40];
 const SIMILAR_OFFER_COUNT = 10;
+let localOffers = [];
 
 setFormDisabled();
 
@@ -86,11 +87,19 @@ const createOffers = (similarOffers) => {
     });
 };
 
+getData((offers) => {
+  localOffers = offers.slice();
+  createOffers(localOffers);
+});
+
+mapFilter.addEventListener('change', () => {
+  layerGroup.clearLayers();
+  createOffers(localOffers);
+});
+
 const initMap = () => {
   layerGroup.clearLayers();
-  getData((offers) => {
-    createOffers(offers);
-  });
+  createOffers(localOffers);
   mapCanvas.setView({
     lat: LATITUDE_COORDINATE,
     lng: LONGITUDE_COORDINATE,

@@ -1,11 +1,12 @@
-import { mapFilter } from './form.js';
+/*import { mapFilter } from './form.js';*/
+
 const DEFAULT_VALUE = 'any';
 const selectHousingType = document.querySelector('[name="housing-type"]');
-/*const selectHousingPrice = document.querySelector('[name="housing-price"]');*/
+const selectHousingPrice = document.querySelector('[name="housing-price"]');
 const selectHousingRooms = document.querySelector('[name="housing-rooms"]');
 const selectHousingGuests = document.querySelector('[name="housing-guests"]');
 
-/*const housingPrice = {
+const housingPrice = {
   low: {
     from: 0,
     to: 10000,
@@ -18,59 +19,28 @@ const selectHousingGuests = document.querySelector('[name="housing-guests"]');
     from: 50000,
     to: Infinity,
   },
-};*/
-
-const onElementChange = (element) => {
-  mapFilter.addEventListener('change', () => {
-    const valueElement = element.value;
-    return valueElement;
-  });
 };
 
-const onHousingTypeChange = () => {
-  onElementChange(selectHousingType);
-};
+const comparesTypeOffers = (object) => selectHousingType.value === DEFAULT_VALUE || object.offer.type === selectHousingType.value;
 
-/*const onHousingPriceChange = () => {
-  onElementChange(selectHousingPrice);
-};*/
+const comparesRoomsOffers = (object) => selectHousingRooms.value === DEFAULT_VALUE || object.offer.rooms.toString() === selectHousingRooms.value;
 
-const onHousingRoomsChange = () => {
-  onElementChange(selectHousingRooms);
-};
+const comparesGuestsOffers = (object) => selectHousingGuests.value === DEFAULT_VALUE || object.offer.guests.toString() === selectHousingGuests.value;
 
-const onHousingGuestsChange = () => {
-  onElementChange(selectHousingGuests);
-};
+const comparesPriceOffers = (object) => selectHousingPrice.value === DEFAULT_VALUE || object.offer.price >= housingPrice[selectHousingPrice.value].from && object.offer.price < housingPrice[selectHousingPrice.value].to;
 
-const comparesTypeOffers = (array) => {
-  if (array.offer.type === onHousingTypeChange() || DEFAULT_VALUE) {
-    return true;
+const comparesFeaturesOffers = (object) => {
+  let isSimilar = true;
+  const mapFeaturesElements = document.querySelectorAll('[name="features"]:checked');
+  for (let i = 0; i < mapFeaturesElements.length; i++) {
+    if (object.offer.features.length === 0 || object.offer.features.indexOf(mapFeaturesElements[i].value) === -1) {
+      isSimilar = false;
+    }
   }
+  return isSimilar;
 };
 
-const comparesRoomsOffers = (array) => {
-  if (array.offer.rooms === onHousingRoomsChange() || DEFAULT_VALUE) {
-    return true;
-  }
-};
+const comparesValuesOffers = (object) => comparesTypeOffers(object) && comparesRoomsOffers(object) && comparesGuestsOffers(object) && comparesPriceOffers(object) && comparesFeaturesOffers(object);
 
-const comparesGuestsOffers = (array) => {
-  if (array.offer.guests === onHousingGuestsChange() || DEFAULT_VALUE) {
-    return true;
-  }
-};
-
-/*const comparesPriceOffers = (array) => {
-  if (array.offer.price >= housingPrice[onHousingPriceChange()].from && array.offer.price < housingPrice[onHousingPriceChange()].to) {
-    return true;
-  }
-};*/
-
-const comparesValuesOffers = (array) => {
-  if (comparesTypeOffers(array) && comparesRoomsOffers(array) && comparesGuestsOffers(array)/* && comparesPriceOffers(array)*/) {
-    return true;
-  }
-};
 
 export { comparesValuesOffers };
