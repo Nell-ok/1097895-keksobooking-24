@@ -25,7 +25,7 @@ const adFormButtonSubmit = document.querySelector('.ad-form__submit');
 const adFormButtonReset = document.querySelector('.ad-form__reset');
 const mapFilter = document.querySelector('.map__filters');
 const mapFilterElements = mapFilter.querySelectorAll('.map__filter');
-const mapFeaturesFilter = mapFilter.querySelector('.map__features');
+const mapFeatures = mapFilter.querySelector('.map__features');
 const selectRooms = document.querySelector('[name="rooms"]');
 const selectCapacity = document.querySelector('[name="capacity"]');
 const selectType = document.querySelector('[name="type"]');
@@ -47,8 +47,8 @@ const setFormDisabled = () => {
     mapFilterElement.setAttribute('disabled', 'disabled');
     mapFilterElement.classList.add('map__filter--disabled');
   }
-  mapFeaturesFilter.setAttribute('disabled', 'disabled');
-  mapFeaturesFilter.classList.add('map__features--disabled');
+  mapFeatures.setAttribute('disabled', 'disabled');
+  mapFeatures.classList.add('map__features--disabled');
 };
 
 const setFormActive = () => {
@@ -66,8 +66,8 @@ const setFormActive = () => {
     mapFilterElement.removeAttribute('disabled', 'disabled');
     mapFilterElement.classList.remove('map__filter--disabled');
   }
-  mapFeaturesFilter.removeAttribute('disabled', 'disabled');
-  mapFeaturesFilter.classList.remove('map__features--disabled');
+  mapFeatures.removeAttribute('disabled', 'disabled');
+  mapFeatures.classList.remove('map__features--disabled');
 };
 
 inputTitle.addEventListener('input', () => {
@@ -129,10 +129,9 @@ adFormButtonSubmit.addEventListener('click', () => {
 adFormButtonReset.addEventListener('click', (evt) => {
   evt.preventDefault();
   adForm.reset();
+  mapFilter.reset();
   initMap();
 });
-
-//сбросить фильтры
 
 const setAdFormSubmit = () => {
   adForm.addEventListener('submit', (evt) => {
@@ -141,6 +140,7 @@ const setAdFormSubmit = () => {
     sendData(
       () => {
         evt.target.reset();
+        mapFilter.reset();
         initMap();
         showMessageSuccess();
         closeMessageSuccess();
@@ -154,4 +154,4 @@ const setAdFormSubmit = () => {
   });
 };
 
-export { setFormDisabled, setFormActive, setAdFormSubmit, inputAddress };
+export { setFormDisabled, setFormActive, setAdFormSubmit, inputAddress, mapFilter };
