@@ -154,4 +154,6 @@ const setAdFormSubmit = () => {
   });
 };
 
-export { setFormDisabled, setFormActive, setAdFormSubmit, inputAddress, mapFilter };
+setAdFormSubmit();
+
+export { setFormDisabled, setFormActive, inputAddress, mapFilter };

@@ -2,6 +2,7 @@ import { setFormDisabled, setFormActive, inputAddress, mapFilter } from './form.
 import { createPopup } from './popup.js';
 import { getData } from './api.js';
 import { comparesValuesOffers } from './filter.js';
+import { debounce } from './utils/debounce.js';
 
 const LATITUDE_COORDINATE = 35.6895;
 const LONGITUDE_COORDINATE = 139.692;
@@ -12,6 +13,7 @@ const MAIN_PIN_ANCHOR = [26, 52];
 const PIN_SIZE = [40, 40];
 const PIN_ANCHOR = [20, 40];
 const SIMILAR_OFFER_COUNT = 10;
+const RERENDER_DELAY = 500;
 let localOffers = [];
 
 setFormDisabled();
@@ -94,7 +96,8 @@ getData((offers) => {
 
 mapFilter.addEventListener('change', () => {
   layerGroup.clearLayers();
-  createOffers(localOffers);
+  const callbackDelay = createOffers(localOffers);
+  debounce(callbackDelay, RERENDER_DELAY);
 });
 
 const initMap = () => {

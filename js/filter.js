@@ -1,6 +1,5 @@
-/*import { mapFilter } from './form.js';*/
-
 const DEFAULT_VALUE = 'any';
+
 const selectHousingType = document.querySelector('[name="housing-type"]');
 const selectHousingPrice = document.querySelector('[name="housing-price"]');
 const selectHousingRooms = document.querySelector('[name="housing-rooms"]');
@@ -30,17 +29,15 @@ const comparesGuestsOffers = (object) => selectHousingGuests.value === DEFAULT_V
 const comparesPriceOffers = (object) => selectHousingPrice.value === DEFAULT_VALUE || object.offer.price >= housingPrice[selectHousingPrice.value].from && object.offer.price < housingPrice[selectHousingPrice.value].to;
 
 const comparesFeaturesOffers = (object) => {
-  let isSimilar = true;
   const mapFeaturesElements = document.querySelectorAll('[name="features"]:checked');
   for (let i = 0; i < mapFeaturesElements.length; i++) {
-    if (object.offer.features.length === 0 || object.offer.features.indexOf(mapFeaturesElements[i].value) === -1) {
-      isSimilar = false;
+    if (!object.offer.features || object.offer.features.length === 0 || object.offer.features.indexOf(mapFeaturesElements[i].value) === -1) {
+      return false;
     }
   }
-  return isSimilar;
+  return true;
 };
 
 const comparesValuesOffers = (object) => comparesTypeOffers(object) && comparesRoomsOffers(object) && comparesGuestsOffers(object) && comparesPriceOffers(object) && comparesFeaturesOffers(object);
-
 
 export { comparesValuesOffers };

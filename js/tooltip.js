@@ -6,7 +6,7 @@ const successElement = templateSuccess.querySelector('.success');
 const errorElement = templateError.querySelector('.error');
 const newSuccessElement = successElement.cloneNode(true);
 const newErrorElement = errorElement.cloneNode(true);
-const errorButton = newErrorElement.querySelector('.error__button');
+const newErrorButton = newErrorElement.querySelector('.error__button');
 
 const showMessage = (element) => {
   document.body.appendChild(element);
@@ -40,7 +40,7 @@ const closeMessageSuccess = () => {
 };
 
 const closeMessageError = () => {
-  errorButton.addEventListener('click', () => {
+  newErrorButton.addEventListener('click', () => {
     newErrorElement.remove();
   });
   closeMessage(newErrorElement);

@@ -10,13 +10,13 @@ const createPopup = (newItem) => {
   const timeElement = newPopup.querySelector('.popup__text--time');
   const descriptionElement = newPopup.querySelector('.popup__description');
   const avatarElement = newPopup.querySelector('.popup__avatar');
-  const popupFeatures = newPopup.querySelector('.popup__features');
-  const featureList = popupFeatures.querySelectorAll('.popup__feature');
-  const popupPhotos = newPopup.querySelector('.popup__photos');
-  const photoElement = popupPhotos.querySelector('.popup__photo');
+  const featuresList = newPopup.querySelector('.popup__features');
+  const featureElements = featuresList.querySelectorAll('.popup__feature');
+  const photosList = newPopup.querySelector('.popup__photos');
+  const photoElement = photosList.querySelector('.popup__photo');
   const popupFragment = document.createDocumentFragment();
 
-  const newFeatures = newItem.offer.features;
+  const newFeaturesArray = newItem.offer.features;
   const newPhotosArray = newItem.offer.photos;
 
   const captionsOfType = {
@@ -30,7 +30,7 @@ const createPopup = (newItem) => {
   const getCaption = (name) => captionsOfType[name];
 
   if (!newPhotosArray) {
-    popupPhotos.remove;
+    photosList.remove;
   } else {
     for (let i = 0; i < newPhotosArray.length; i++) {
       const newPhotoElement = document.createElement('img');
@@ -42,15 +42,15 @@ const createPopup = (newItem) => {
       popupFragment.appendChild(newPhotoElement);
     }
 
-    popupPhotos.appendChild(popupFragment);
+    photosList.appendChild(popupFragment);
     photoElement.remove();
   }
 
-  if (!newFeatures) {
-    featureList.remove;
+  if (!newFeaturesArray) {
+    featureElements.remove;
   } else {
-    featureList.forEach((item) => {
-      const isNecessary = newFeatures.some((feature) => item.classList.contains(`popup__feature--${feature}`));
+    featureElements.forEach((item) => {
+      const isNecessary = newFeaturesArray.some((feature) => item.classList.contains(`popup__feature--${feature}`));
       if (!isNecessary) {
         item.remove();
       }
