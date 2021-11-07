@@ -94,11 +94,14 @@ getData((offers) => {
   createOffers(localOffers);
 });
 
-mapFilter.addEventListener('change', () => {
-  layerGroup.clearLayers();
-  const callbackDelay = createOffers(localOffers);
-  debounce(callbackDelay, RERENDER_DELAY);
-});
+const setFilterClickHandler = (callback) => {
+  mapFilter.addEventListener('change', () => {
+    layerGroup.clearLayers();
+    callback();
+  });
+};
+
+setFilterClickHandler(debounce(() => createOffers(localOffers), RERENDER_DELAY));
 
 const initMap = () => {
   layerGroup.clearLayers();
