@@ -7,8 +7,6 @@ const adFormImagesInput = document.querySelector('[name="images"]');
 const adFormPhoto = document.querySelector('.ad-form__photo');
 const adFormPhotoCard = document.createElement('img');
 adFormPhoto.appendChild(adFormPhotoCard);
-adFormPhotoCard.width = WIDTH_PHOTO;
-adFormPhotoCard.height = HEIGHT_PHOTO;
 
 const onInputChange = (input, picture) => {
   input.addEventListener('change', () => {
@@ -17,6 +15,8 @@ const onInputChange = (input, picture) => {
     const nameMatches = FILE_TYPES.some((fileType) => fileName.endsWith(fileType));
 
     if (nameMatches) {
+      picture.width = WIDTH_PHOTO;
+      picture.height = HEIGHT_PHOTO;
       picture.src = URL.createObjectURL(fileChange);
     }
   });
