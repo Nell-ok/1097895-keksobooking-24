@@ -1,6 +1,7 @@
 import { showMessageSuccess, showMessageError, closeMessageSuccess, closeMessageError } from './tooltip.js';
 import { initMap } from './map.js';
 import { sendData } from './api.js';
+import { removePictures } from './avatar.js';
 
 const MIN_LENGTH_TITLE = 30;
 const MAX_LENGTH_TITLE = 100;
@@ -130,6 +131,7 @@ adFormButtonReset.addEventListener('click', (evt) => {
   evt.preventDefault();
   adForm.reset();
   mapFilter.reset();
+  removePictures();
   initMap();
 });
 
@@ -141,6 +143,7 @@ const setAdFormSubmit = () => {
       () => {
         evt.target.reset();
         mapFilter.reset();
+        removePictures();
         initMap();
         showMessageSuccess();
         closeMessageSuccess();

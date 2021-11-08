@@ -21,7 +21,7 @@ setFormDisabled();
 const mapCanvas = L.map('map-canvas')
   .on('load', () => {
     setFormActive();
-    inputAddress.value = `Lat: ${LATITUDE_COORDINATE}, Lng: ${LONGITUDE_COORDINATE}`;
+    inputAddress.value = `${LATITUDE_COORDINATE}, ${LONGITUDE_COORDINATE}`;
   })
   .setView({
     lat: LATITUDE_COORDINATE,
@@ -58,7 +58,7 @@ mainPinMarker.on('moveend', (evt) => {
   const coordinateObject = evt.target.getLatLng();
   const latitudeCoordinate = coordinateObject.lat.toFixed(NUMBER_CHARACTERS_COORDINATE);
   const longitudeCoordinate = coordinateObject.lat.toFixed(NUMBER_CHARACTERS_COORDINATE);
-  inputAddress.value = `Lat: ${latitudeCoordinate}, Lng: ${longitudeCoordinate}`;
+  inputAddress.value = `${latitudeCoordinate}, ${longitudeCoordinate}`;
 });
 
 const pinIcon = L.icon({
@@ -111,7 +111,7 @@ const initMap = () => {
     lng: LONGITUDE_COORDINATE,
   }, MAP_ZOOM);
 
-  inputAddress.value = `Lat: ${LATITUDE_COORDINATE}, Lng: ${LONGITUDE_COORDINATE}`;
+  inputAddress.value = `${LATITUDE_COORDINATE}, ${LONGITUDE_COORDINATE}`;
 
   mainPinMarker.setLatLng({
     lat: LATITUDE_COORDINATE,
