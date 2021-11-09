@@ -13,18 +13,21 @@ const showMessage = (element) => {
   element.classList.add('active');
 };
 
-const closeMessage = (element) => {
-  const onDocumentKeydown = document.addEventListener('keydown', (evt) => {
+const setCloseMessage = (element) => {
+  function onDocumentKeydown(evt) {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       element.remove();
       document.removeEventListener('keydown', onDocumentKeydown);
     }
-  });
-  const onDocumentClick = document.body.addEventListener('click', () => {
+  }
+  document.addEventListener('keydown', onDocumentKeydown);
+
+  function onBodyClick() {
     element.remove();
-    document.body.removeEventListener('click', onDocumentClick);
-  });
+    document.removeEventListener('keydown', onDocumentKeydown);
+  }
+  document.body.addEventListener('click', onBodyClick);
 };
 
 const showMessageSuccess = () => {
@@ -36,14 +39,14 @@ const showMessageError = () => {
 };
 
 const closeMessageSuccess = () => {
-  closeMessage(newSuccessElement);
+  setCloseMessage(newSuccessElement);
 };
 
 const closeMessageError = () => {
   newErrorButton.addEventListener('click', () => {
     newErrorElement.remove();
   });
-  closeMessage(newErrorElement);
+  setCloseMessage(newErrorElement);
 };
 
 export { showMessageSuccess, showMessageError, closeMessageSuccess, closeMessageError };

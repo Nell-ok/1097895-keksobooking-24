@@ -33,7 +33,7 @@ const selectType = document.querySelector('[name="type"]');
 const selectTimein = document.querySelector('[name="timein"]');
 const selectTimeout = document.querySelector('[name="timeout"]');
 
-const setFormDisabled = () => {
+const adFormDisabled = () => {
   adForm.setAttribute('disabled', 'disabled');
   adForm.classList.add('ad-form--disabled');
   for (const adFormElement of adFormElements) {
@@ -42,17 +42,29 @@ const setFormDisabled = () => {
   }
   adFormHeaderElement.setAttribute('disabled', 'disabled');
   adFormHeaderElement.classList.add('ad-form-header--disabled');
+};
+
+const mapFilterDisabled = () => {
   mapFilter.setAttribute('disabled', 'disabled');
   mapFilter.classList.add('map__filters--disabled');
   for (const mapFilterElement of mapFilterElements) {
     mapFilterElement.setAttribute('disabled', 'disabled');
     mapFilterElement.classList.add('map__filter--disabled');
   }
+};
+
+const mapFeaturesDisabled = () => {
   mapFeatures.setAttribute('disabled', 'disabled');
   mapFeatures.classList.add('map__features--disabled');
 };
 
-const setFormActive = () => {
+const setFormDisabled = () => {
+  adFormDisabled();
+  mapFilterDisabled();
+  mapFeaturesDisabled();
+};
+
+const adFormActive = () => {
   adForm.removeAttribute('disabled', 'disabled');
   adForm.classList.remove('ad-form--disabled');
   for (const adFormElement of adFormElements) {
@@ -61,14 +73,26 @@ const setFormActive = () => {
   }
   adFormHeaderElement.removeAttribute('disabled', 'disabled');
   adFormHeaderElement.classList.remove('ad-form-header--disabled');
+};
+
+const mapFilterActive = () => {
   mapFilter.removeAttribute('disabled', 'disabled');
   mapFilter.classList.remove('map__filters--disabled');
   for (const mapFilterElement of mapFilterElements) {
     mapFilterElement.removeAttribute('disabled', 'disabled');
     mapFilterElement.classList.remove('map__filter--disabled');
   }
+};
+
+const mapFeaturesActive = () => {
   mapFeatures.removeAttribute('disabled', 'disabled');
   mapFeatures.classList.remove('map__features--disabled');
+};
+
+const setFormActive = () => {
+  adFormActive();
+  mapFilterActive();
+  mapFeaturesActive();
 };
 
 inputTitle.addEventListener('input', () => {
@@ -85,10 +109,9 @@ inputTitle.addEventListener('input', () => {
 
 inputPrice.addEventListener('input', () => {
   const valuePrice = inputPrice.value;
+  inputPrice.setCustomValidity('');
   if (valuePrice > MAX_PRICE) {
     inputPrice.setCustomValidity(`Максимальное значение ${MAX_PRICE}`);
-  } else {
-    inputPrice.setCustomValidity('');
   }
   inputPrice.reportValidity();
 });

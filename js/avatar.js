@@ -8,7 +8,7 @@ const adFormImagesInput = document.querySelector('[name="images"]');
 const adFormPhoto = document.querySelector('.ad-form__photo');
 const adFormPhotoCard = document.createElement('img');
 
-const onInputChange = (input, picture) => {
+const setInputChange = (input, picture) => {
   input.addEventListener('change', () => {
     const fileChange = input.files[0];
     const fileName = fileChange.name.toLowerCase();
@@ -28,8 +28,8 @@ const removePictures = () => {
   adFormAvatarPicture.src = DEFAULT_URL_AVATAR;
 };
 
-onInputChange(adFormAvatarInput, adFormAvatarPicture);
+setInputChange(adFormAvatarInput, adFormAvatarPicture);
 
-onInputChange(adFormImagesInput, adFormPhotoCard);
+setInputChange(adFormImagesInput, adFormPhotoCard);
 
 export { removePictures };

@@ -1,5 +1,8 @@
+const NEW_PHOTO_WIDTH = 45;
+const NEW_PHOTO_HEIGHT = 40;
+const templateCard = document.querySelector('#card').content;
+
 const createPopup = (newItem) => {
-  const templateCard = document.querySelector('#card').content;
   const popupElement = templateCard.querySelector('.popup');
   const newPopup = popupElement.cloneNode(true);
   const titleElement = newPopup.querySelector('.popup__title');
@@ -16,8 +19,8 @@ const createPopup = (newItem) => {
   const photoElement = photosList.querySelector('.popup__photo');
   const popupFragment = document.createDocumentFragment();
 
-  const newFeaturesArray = newItem.offer.features;
-  const newPhotosArray = newItem.offer.photos;
+  const newFeatures = newItem.offer.features;
+  const newPhotos = newItem.offer.photos;
 
   const captionsOfType = {
     palace: 'Дворец для palace',
@@ -29,28 +32,30 @@ const createPopup = (newItem) => {
 
   const getCaption = (name) => captionsOfType[name];
 
-  if (!newPhotosArray) {
+  if (!newPhotos) {
     photosList.remove;
   } else {
-    for (let i = 0; i < newPhotosArray.length; i++) {
-      const newPhotoElement = document.createElement('img');
+    newPhotos.forEach((newPhotoElement, item) => {
+      newPhotoElement = document.createElement('img');
       newPhotoElement.classList.add('popup__photo');
-      newPhotoElement.src = newPhotosArray[i];
+      newPhotoElement.src = newPhotos[item];
       newPhotoElement.alt = 'Фотография жилья';
-      newPhotoElement.width = 45;
-      newPhotoElement.height = 40;
+      newPhotoElement.width = NEW_PHOTO_WIDTH;
+      newPhotoElement.height = NEW_PHOTO_HEIGHT;
       popupFragment.appendChild(newPhotoElement);
-    }
+    });
 
     photosList.appendChild(popupFragment);
     photoElement.remove();
   }
 
-  if (!newFeaturesArray) {
+  if (!newFeatures) {
     featureElements.remove;
-  } else {
+    return;
+  }
+  {
     featureElements.forEach((item) => {
-      const isNecessary = newFeaturesArray.some((feature) => item.classList.contains(`popup__feature--${feature}`));
+      const isNecessary = newFeatures.some((feature) => item.classList.contains(`popup__feature--${feature}`));
       if (!isNecessary) {
         item.remove();
       }
