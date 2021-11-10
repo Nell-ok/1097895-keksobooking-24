@@ -1,7 +1,6 @@
 import './popup.js';
 import './map.js';
 import './api.js';
-import { setAdFormSubmit } from './form.js';
+import './form.js';
 import './tooltip.js';
-
-setAdFormSubmit();
+import './avatar.js';

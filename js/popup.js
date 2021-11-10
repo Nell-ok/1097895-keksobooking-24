@@ -1,5 +1,8 @@
+const NEW_PHOTO_WIDTH = 45;
+const NEW_PHOTO_HEIGHT = 40;
+const templateCard = document.querySelector('#card').content;
+
 const createPopup = (newItem) => {
-  const templateCard = document.querySelector('#card').content;
   const popupElement = templateCard.querySelector('.popup');
   const newPopup = popupElement.cloneNode(true);
   const titleElement = newPopup.querySelector('.popup__title');
@@ -10,14 +13,14 @@ const createPopup = (newItem) => {
   const timeElement = newPopup.querySelector('.popup__text--time');
   const descriptionElement = newPopup.querySelector('.popup__description');
   const avatarElement = newPopup.querySelector('.popup__avatar');
-  const popupFeatures = newPopup.querySelector('.popup__features');
-  const featureList = popupFeatures.querySelectorAll('.popup__feature');
-  const popupPhotos = newPopup.querySelector('.popup__photos');
-  const photoElement = popupPhotos.querySelector('.popup__photo');
+  const featuresList = newPopup.querySelector('.popup__features');
+  const featureElements = featuresList.querySelectorAll('.popup__feature');
+  const photosList = newPopup.querySelector('.popup__photos');
+  const photoElement = photosList.querySelector('.popup__photo');
   const popupFragment = document.createDocumentFragment();
 
   const newFeatures = newItem.offer.features;
-  const newPhotosArray = newItem.offer.photos;
+  const newPhotos = newItem.offer.photos;
 
   const captionsOfType = {
     palace: 'Дворец для palace',
@@ -29,27 +32,29 @@ const createPopup = (newItem) => {
 
   const getCaption = (name) => captionsOfType[name];
 
-  if (!newPhotosArray) {
-    popupPhotos.remove;
+  if (!newPhotos) {
+    photosList.remove;
   } else {
-    for (let i = 0; i < newPhotosArray.length; i++) {
-      const newPhotoElement = document.createElement('img');
+    newPhotos.forEach((newPhotoElement, item) => {
+      newPhotoElement = document.createElement('img');
       newPhotoElement.classList.add('popup__photo');
-      newPhotoElement.src = newPhotosArray[i];
+      newPhotoElement.src = newPhotos[item];
       newPhotoElement.alt = 'Фотография жилья';
-      newPhotoElement.width = 45;
-      newPhotoElement.height = 40;
+      newPhotoElement.width = NEW_PHOTO_WIDTH;
+      newPhotoElement.height = NEW_PHOTO_HEIGHT;
       popupFragment.appendChild(newPhotoElement);
-    }
+    });
 
-    popupPhotos.appendChild(popupFragment);
+    photosList.appendChild(popupFragment);
     photoElement.remove();
   }
 
   if (!newFeatures) {
-    featureList.remove;
-  } else {
-    featureList.forEach((item) => {
+    featureElements.remove;
+    return;
+  }
+  {
+    featureElements.forEach((item) => {
       const isNecessary = newFeatures.some((feature) => item.classList.contains(`popup__feature--${feature}`));
       if (!isNecessary) {
         item.remove();
