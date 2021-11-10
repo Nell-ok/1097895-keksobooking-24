@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-
+//Tooltip
 const templateSuccess = document.querySelector('#success').content;
 const templateError = document.querySelector('#error').content;
 const successElement = templateSuccess.querySelector('.success');
