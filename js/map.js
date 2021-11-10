@@ -2,6 +2,7 @@ import { setFormDisabled, setFormActive, inputAddress, mapFilter } from './form.
 import { createPopup } from './popup.js';
 import { getData } from './api.js';
 import { comparesValuesOffers } from './filter.js';
+import { debounce } from './utils/debounce.js';
 
 const LATITUDE_COORDINATE = 35.6895;
 const LONGITUDE_COORDINATE = 139.692;
@@ -12,6 +13,7 @@ const MAIN_PIN_ANCHOR = [26, 52];
 const PIN_SIZE = [40, 40];
 const PIN_ANCHOR = [20, 40];
 const SIMILAR_OFFER_COUNT = 10;
+const RERENDER_DELAY = 500;
 let localOffers = [];
 
 setFormDisabled();
@@ -19,7 +21,7 @@ setFormDisabled();
 const mapCanvas = L.map('map-canvas')
   .on('load', () => {
     setFormActive();
-    inputAddress.value = `Lat: ${LATITUDE_COORDINATE}, Lng: ${LONGITUDE_COORDINATE}`;
+    inputAddress.value = `${LATITUDE_COORDINATE}, ${LONGITUDE_COORDINATE}`;
   })
   .setView({
     lat: LATITUDE_COORDINATE,
@@ -56,7 +58,7 @@ mainPinMarker.on('moveend', (evt) => {
   const coordinateObject = evt.target.getLatLng();
   const latitudeCoordinate = coordinateObject.lat.toFixed(NUMBER_CHARACTERS_COORDINATE);
   const longitudeCoordinate = coordinateObject.lat.toFixed(NUMBER_CHARACTERS_COORDINATE);
-  inputAddress.value = `Lat: ${latitudeCoordinate}, Lng: ${longitudeCoordinate}`;
+  inputAddress.value = `${latitudeCoordinate}, ${longitudeCoordinate}`;
 });
 
 const pinIcon = L.icon({
@@ -92,10 +94,14 @@ getData((offers) => {
   createOffers(localOffers);
 });
 
-mapFilter.addEventListener('change', () => {
-  layerGroup.clearLayers();
-  createOffers(localOffers);
-});
+const setFilterClickHandler = (callback) => {
+  mapFilter.addEventListener('change', () => {
+    layerGroup.clearLayers();
+    callback();
+  });
+};
+
+setFilterClickHandler(debounce(() => createOffers(localOffers), RERENDER_DELAY));
 
 const initMap = () => {
   layerGroup.clearLayers();
@@ -105,7 +111,7 @@ const initMap = () => {
     lng: LONGITUDE_COORDINATE,
   }, MAP_ZOOM);
 
-  inputAddress.value = `Lat: ${LATITUDE_COORDINATE}, Lng: ${LONGITUDE_COORDINATE}`;
+  inputAddress.value = `${LATITUDE_COORDINATE}, ${LONGITUDE_COORDINATE}`;
 
   mainPinMarker.setLatLng({
     lat: LATITUDE_COORDINATE,

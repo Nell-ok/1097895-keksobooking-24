@@ -6,25 +6,30 @@ const successElement = templateSuccess.querySelector('.success');
 const errorElement = templateError.querySelector('.error');
 const newSuccessElement = successElement.cloneNode(true);
 const newErrorElement = errorElement.cloneNode(true);
-const errorButton = newErrorElement.querySelector('.error__button');
+const newErrorButton = newErrorElement.querySelector('.error__button');
 
 const showMessage = (element) => {
   document.body.appendChild(element);
   element.classList.add('active');
 };
 
-const closeMessage = (element) => {
-  const onDocumentKeydown = document.addEventListener('keydown', (evt) => {
+const setCloseMessage = (element) => {
+  const closeMessage = () => {
+    element.remove();
+    document.removeEventListener('keydown', onDocumentKeydown);
+  };
+  function onDocumentKeydown(evt) {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      element.remove();
-      document.removeEventListener('keydown', onDocumentKeydown);
+      closeMessage(element);
     }
-  });
-  const onDocumentClick = document.body.addEventListener('click', () => {
-    element.remove();
-    document.body.removeEventListener('click', onDocumentClick);
-  });
+  }
+  document.addEventListener('keydown', onDocumentKeydown);
+
+  function onBodyClick() {
+    closeMessage(element);
+  }
+  document.body.addEventListener('click', onBodyClick);
 };
 
 const showMessageSuccess = () => {
@@ -36,14 +41,14 @@ const showMessageError = () => {
 };
 
 const closeMessageSuccess = () => {
-  closeMessage(newSuccessElement);
+  setCloseMessage(newSuccessElement);
 };
 
 const closeMessageError = () => {
-  errorButton.addEventListener('click', () => {
+  newErrorButton.addEventListener('click', () => {
     newErrorElement.remove();
   });
-  closeMessage(newErrorElement);
+  setCloseMessage(newErrorElement);
 };
 
 export { showMessageSuccess, showMessageError, closeMessageSuccess, closeMessageError };
