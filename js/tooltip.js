@@ -14,18 +14,20 @@ const showMessage = (element) => {
 };
 
 const setCloseMessage = (element) => {
+  const closeMessage = () => {
+    element.remove();
+    document.removeEventListener('keydown', onDocumentKeydown);
+  };
   function onDocumentKeydown(evt) {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      element.remove();
-      document.removeEventListener('keydown', onDocumentKeydown);
+      closeMessage(element);
     }
   }
   document.addEventListener('keydown', onDocumentKeydown);
 
   function onBodyClick() {
-    element.remove();
-    document.removeEventListener('keydown', onDocumentKeydown);
+    closeMessage(element);
   }
   document.body.addEventListener('click', onBodyClick);
 };
