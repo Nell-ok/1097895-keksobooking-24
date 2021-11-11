@@ -26,9 +26,10 @@ const setCloseMessage = (element) => {
   }
   document.addEventListener('keydown', onDocumentKeydown);
 
-  function onBodyClick() {
+  const onBodyClick = () => {
     closeMessage(element);
-  }
+    document.body.removeEventListener('click', onBodyClick);
+  };
   document.body.addEventListener('click', onBodyClick);
 };
 

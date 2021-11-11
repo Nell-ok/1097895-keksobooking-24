@@ -8,7 +8,35 @@ const adFormImagesInput = document.querySelector('[name="images"]');
 const adFormPhoto = document.querySelector('.ad-form__photo');
 const adFormPhotoCard = document.createElement('img');
 
-const setInputChange = (input, picture) => {
+adFormAvatarInput.addEventListener('change', () => {
+  const fileChange = adFormAvatarInput.files[0];
+  const fileName = fileChange.name.toLowerCase();
+  const nameMatches = FILE_TYPES.some((fileType) => fileName.endsWith(fileType));
+
+  if (nameMatches) {
+    adFormAvatarPicture.src = URL.createObjectURL(fileChange);
+  }
+});
+
+adFormImagesInput.addEventListener('change', () => {
+  const fileChange = adFormImagesInput.files[0];
+  const fileName = fileChange.name.toLowerCase();
+  const nameMatches = FILE_TYPES.some((fileType) => fileName.endsWith(fileType));
+
+  if (nameMatches) {
+    adFormPhoto.appendChild(adFormPhotoCard);
+    adFormPhotoCard.width = WIDTH_PHOTO;
+    adFormPhotoCard.height = HEIGHT_PHOTO;
+    adFormPhotoCard.src = URL.createObjectURL(fileChange);
+  }
+});
+
+const removePictures = () => {
+  adFormPhoto.removeChild(adFormPhotoCard);
+  adFormAvatarPicture.src = DEFAULT_URL_AVATAR;
+};
+
+/*const setInputChange = (input, picture) => {
   input.addEventListener('change', () => {
     const fileChange = input.files[0];
     const fileName = fileChange.name.toLowerCase();
@@ -21,15 +49,10 @@ const setInputChange = (input, picture) => {
       picture.src = URL.createObjectURL(fileChange);
     }
   });
-};
+};*/
 
-const removePictures = () => {
-  adFormPhoto.removeChild(adFormPhotoCard);
-  adFormAvatarPicture.src = DEFAULT_URL_AVATAR;
-};
+/*setInputChange(adFormAvatarInput, adFormAvatarPicture);
 
-setInputChange(adFormAvatarInput, adFormAvatarPicture);
-
-setInputChange(adFormImagesInput, adFormPhotoCard);
+setInputChange(adFormImagesInput, adFormPhotoCard);*/
 
 export { removePictures };

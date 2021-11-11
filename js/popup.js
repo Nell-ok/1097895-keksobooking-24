@@ -23,17 +23,17 @@ const createPopup = (newItem) => {
   const newPhotos = newItem.offer.photos;
 
   const captionsOfType = {
-    palace: 'Дворец для palace',
-    flat: 'Квартира для flat',
-    house: 'Дом для house',
-    bungalow: 'Бунгало для bungalow',
-    hotel: 'Отель для hotel',
+    palace: 'Дворец',
+    flat: 'Квартира',
+    house: 'Дом',
+    bungalow: 'Бунгало',
+    hotel: 'Отель',
   };
 
   const getCaption = (name) => captionsOfType[name];
 
   if (!newPhotos) {
-    photosList.remove;
+    photosList.remove();
   } else {
     newPhotos.forEach((newPhotoElement, item) => {
       newPhotoElement = document.createElement('img');
