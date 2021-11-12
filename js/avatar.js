@@ -32,27 +32,10 @@ adFormImagesInput.addEventListener('change', () => {
 });
 
 const removePictures = () => {
-  adFormPhoto.removeChild(adFormPhotoCard);
+  if (adFormPhotoCard.src !== '') {
+    adFormPhoto.removeChild(adFormPhotoCard);
+  }
   adFormAvatarPicture.src = DEFAULT_URL_AVATAR;
 };
-
-/*const setInputChange = (input, picture) => {
-  input.addEventListener('change', () => {
-    const fileChange = input.files[0];
-    const fileName = fileChange.name.toLowerCase();
-    const nameMatches = FILE_TYPES.some((fileType) => fileName.endsWith(fileType));
-
-    if (nameMatches) {
-      adFormPhoto.appendChild(adFormPhotoCard);
-      picture.width = WIDTH_PHOTO;
-      picture.height = HEIGHT_PHOTO;
-      picture.src = URL.createObjectURL(fileChange);
-    }
-  });
-};*/
-
-/*setInputChange(adFormAvatarInput, adFormAvatarPicture);
-
-setInputChange(adFormImagesInput, adFormPhotoCard);*/
 
 export { removePictures };

@@ -50,10 +50,8 @@ const createPopup = (newItem) => {
   }
 
   if (!newFeatures) {
-    featureElements.remove;
-    return;
-  }
-  {
+    featuresList.remove();
+  } else {
     featureElements.forEach((item) => {
       const isNecessary = newFeatures.some((feature) => item.classList.contains(`popup__feature--${feature}`));
       if (!isNecessary) {
