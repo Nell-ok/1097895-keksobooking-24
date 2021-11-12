@@ -6,7 +6,6 @@ const adFormAvatarInput = document.querySelector('[name="avatar"]');
 const adFormAvatarPicture = document.querySelector('.ad-form-header__preview img');
 const adFormImagesInput = document.querySelector('[name="images"]');
 const adFormPhoto = document.querySelector('.ad-form__photo');
-const adFormPhotoCard = document.createElement('img');
 
 adFormAvatarInput.addEventListener('change', () => {
   const fileChange = adFormAvatarInput.files[0];
@@ -24,6 +23,7 @@ adFormImagesInput.addEventListener('change', () => {
   const nameMatches = FILE_TYPES.some((fileType) => fileName.endsWith(fileType));
 
   if (nameMatches) {
+    const adFormPhotoCard = document.createElement('img');
     adFormPhoto.appendChild(adFormPhotoCard);
     adFormPhotoCard.width = WIDTH_PHOTO;
     adFormPhotoCard.height = HEIGHT_PHOTO;
@@ -32,7 +32,8 @@ adFormImagesInput.addEventListener('change', () => {
 });
 
 const removePictures = () => {
-  if (adFormPhotoCard.src !== '') {
+  const adFormPhotoCard = adFormPhoto.querySelector('img');
+  if (adFormPhotoCard && adFormPhotoCard.src !== '') {
     adFormPhoto.removeChild(adFormPhotoCard);
   }
   adFormAvatarPicture.src = DEFAULT_URL_AVATAR;
