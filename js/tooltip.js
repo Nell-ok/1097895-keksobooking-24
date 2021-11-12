@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-//Tooltip
+
 const templateSuccess = document.querySelector('#success').content;
 const templateError = document.querySelector('#error').content;
 const successElement = templateSuccess.querySelector('.success');
@@ -26,9 +26,10 @@ const setCloseMessage = (element) => {
   }
   document.addEventListener('keydown', onDocumentKeydown);
 
-  function onBodyClick() {
+  const onBodyClick = () => {
     closeMessage(element);
-  }
+    document.body.removeEventListener('click', onBodyClick);
+  };
   document.body.addEventListener('click', onBodyClick);
 };
 

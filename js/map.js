@@ -8,10 +8,10 @@ const LATITUDE_COORDINATE = 35.6895;
 const LONGITUDE_COORDINATE = 139.692;
 const NUMBER_CHARACTERS_COORDINATE = 5;
 const MAP_ZOOM = 10;
-const MAIN_PIN_SIZE = [52, 52];
-const MAIN_PIN_ANCHOR = [26, 52];
-const PIN_SIZE = [40, 40];
-const PIN_ANCHOR = [20, 40];
+const MAIN_PIN_SIZES = [52, 52];
+const MAIN_PIN_ANCHORS = [26, 52];
+const PIN_SIZES = [40, 40];
+const PIN_ANCHORS = [20, 40];
 const SIMILAR_OFFER_COUNT = 10;
 const RERENDER_DELAY = 500;
 let localOffers = [];
@@ -37,8 +37,8 @@ L.tileLayer(
 
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
-  iconSize: MAIN_PIN_SIZE,
-  iconAnchor: MAIN_PIN_ANCHOR,
+  iconSize: MAIN_PIN_SIZES,
+  iconAnchor: MAIN_PIN_ANCHORS,
 });
 
 const mainPinMarker = L.marker(
@@ -63,8 +63,8 @@ mainPinMarker.on('moveend', (evt) => {
 
 const pinIcon = L.icon({
   iconUrl: 'img/pin.svg',
-  iconSize: PIN_SIZE,
-  iconAnchor: PIN_ANCHOR,
+  iconSize: PIN_SIZES,
+  iconAnchor: PIN_ANCHORS,
 });
 
 const layerGroup = L.layerGroup().addTo(mapCanvas);

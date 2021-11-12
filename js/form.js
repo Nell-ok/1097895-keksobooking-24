@@ -7,6 +7,7 @@ const MIN_LENGTH_TITLE = 30;
 const MAX_LENGTH_TITLE = 100;
 const MAX_PRICE = 1000000;
 const NUMBER_ROOMS = 100;
+const DEFAULT_MIN_PRICE = 1000;
 
 const minPriceOnType = {
   bungalow: 0,
@@ -33,7 +34,7 @@ const selectType = document.querySelector('[name="type"]');
 const selectTimein = document.querySelector('[name="timein"]');
 const selectTimeout = document.querySelector('[name="timeout"]');
 
-const adFormDisabled = () => {
+const adFormDisable = () => {
   adForm.setAttribute('disabled', 'disabled');
   adForm.classList.add('ad-form--disabled');
   for (const adFormElement of adFormElements) {
@@ -44,7 +45,7 @@ const adFormDisabled = () => {
   adFormHeaderElement.classList.add('ad-form-header--disabled');
 };
 
-const mapFilterDisabled = () => {
+const mapFilterDisable = () => {
   mapFilter.setAttribute('disabled', 'disabled');
   mapFilter.classList.add('map__filters--disabled');
   for (const mapFilterElement of mapFilterElements) {
@@ -53,18 +54,18 @@ const mapFilterDisabled = () => {
   }
 };
 
-const mapFeaturesDisabled = () => {
+const mapFeaturesDisable = () => {
   mapFeatures.setAttribute('disabled', 'disabled');
   mapFeatures.classList.add('map__features--disabled');
 };
 
 const setFormDisabled = () => {
-  adFormDisabled();
-  mapFilterDisabled();
-  mapFeaturesDisabled();
+  adFormDisable();
+  mapFilterDisable();
+  mapFeaturesDisable();
 };
 
-const adFormActive = () => {
+const adFormActivate = () => {
   adForm.removeAttribute('disabled', 'disabled');
   adForm.classList.remove('ad-form--disabled');
   for (const adFormElement of adFormElements) {
@@ -75,7 +76,7 @@ const adFormActive = () => {
   adFormHeaderElement.classList.remove('ad-form-header--disabled');
 };
 
-const mapFilterActive = () => {
+const mapFilterActivate = () => {
   mapFilter.removeAttribute('disabled', 'disabled');
   mapFilter.classList.remove('map__filters--disabled');
   for (const mapFilterElement of mapFilterElements) {
@@ -84,15 +85,15 @@ const mapFilterActive = () => {
   }
 };
 
-const mapFeaturesActive = () => {
+const mapFeaturesActivate = () => {
   mapFeatures.removeAttribute('disabled', 'disabled');
   mapFeatures.classList.remove('map__features--disabled');
 };
 
 const setFormActive = () => {
-  adFormActive();
-  mapFilterActive();
-  mapFeaturesActive();
+  adFormActivate();
+  mapFilterActivate();
+  mapFeaturesActivate();
 };
 
 inputTitle.addEventListener('input', () => {
@@ -150,9 +151,15 @@ adFormButtonSubmit.addEventListener('click', () => {
   onRoomsCapacityChange();
 });
 
+const resetInputPrice = () => {
+  inputPrice.setAttribute('placeholder', DEFAULT_MIN_PRICE);
+  inputPrice.setAttribute('min', DEFAULT_MIN_PRICE);
+};
+
 adFormButtonReset.addEventListener('click', (evt) => {
   evt.preventDefault();
   adForm.reset();
+  resetInputPrice();
   mapFilter.reset();
   removePictures();
   initMap();
@@ -165,6 +172,7 @@ const setAdFormSubmit = () => {
     sendData(
       () => {
         evt.target.reset();
+        resetInputPrice();
         mapFilter.reset();
         removePictures();
         initMap();
