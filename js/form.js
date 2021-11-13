@@ -92,7 +92,6 @@ const mapFeaturesActivate = () => {
 
 const setFormActive = () => {
   adFormActivate();
-  mapFilterActivate();
   mapFeaturesActivate();
 };
 
@@ -190,4 +189,4 @@ const setAdFormSubmit = () => {
 
 setAdFormSubmit();
 
-export { setFormDisabled, setFormActive, inputAddress, mapFilter };
+export { setFormDisabled, setFormActive, mapFilterActivate, inputAddress, mapFilter };

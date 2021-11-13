@@ -1,4 +1,4 @@
-import { setFormDisabled, setFormActive, inputAddress, mapFilter } from './form.js';
+import { setFormDisabled, setFormActive, mapFilterActivate, inputAddress, mapFilter } from './form.js';
 import { createPopup } from './popup.js';
 import { getData } from './api.js';
 import { comparesValuesOffers } from './filter.js';
@@ -92,6 +92,7 @@ const createOffers = (similarOffers) => {
 getData((offers) => {
   localOffers = offers.slice();
   createOffers(localOffers);
+  mapFilterActivate();
 });
 
 const setFilterClickHandler = (callback) => {
