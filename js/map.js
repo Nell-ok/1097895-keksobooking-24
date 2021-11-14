@@ -1,4 +1,4 @@
-import { setFormDisabled, setFormActive, mapFilterActivate, inputAddress, mapFilter } from './form.js';
+import { setFormDisabled, setFormActive, mapFilterActivate, mapFeaturesActivate, inputAddress, mapFilter } from './form.js';
 import { createPopup } from './popup.js';
 import { getData } from './api.js';
 import { comparesValuesOffers } from './filter.js';
@@ -20,7 +20,14 @@ setFormDisabled();
 
 const mapCanvas = L.map('map-canvas')
   .on('load', () => {
+    console.log('load map');
     setFormActive();
+    getData((offers) => {
+      localOffers = offers.slice();
+      createOffers(localOffers);
+      mapFilterActivate();
+      mapFeaturesActivate();
+    });
     inputAddress.value = `${LATITUDE_COORDINATE}, ${LONGITUDE_COORDINATE}`;
   })
   .setView({
@@ -70,6 +77,7 @@ const pinIcon = L.icon({
 const layerGroup = L.layerGroup().addTo(mapCanvas);
 
 const createOffers = (similarOffers) => {
+  console.log('offers');
   similarOffers.filter(comparesValuesOffers)
     .slice(0, SIMILAR_OFFER_COUNT)
     .forEach((offer) => {
@@ -89,11 +97,12 @@ const createOffers = (similarOffers) => {
     });
 };
 
-getData((offers) => {
+/*getData((offers) => {
   localOffers = offers.slice();
   createOffers(localOffers);
   mapFilterActivate();
-});
+  mapFeaturesActivate();
+});*/
 
 const setFilterClickHandler = (callback) => {
   mapFilter.addEventListener('change', () => {
