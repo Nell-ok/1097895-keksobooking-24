@@ -60,14 +60,12 @@ const mapFeaturesDisable = () => {
 };
 
 const setFormDisabled = () => {
-  console.log('disable all forms');
   adFormDisable();
   mapFilterDisable();
   mapFeaturesDisable();
 };
 
 const adFormActivate = () => {
-  console.log('activate form');
   adForm.removeAttribute('disabled', 'disabled');
   adForm.classList.remove('ad-form--disabled');
   for (const adFormElement of adFormElements) {
@@ -79,7 +77,6 @@ const adFormActivate = () => {
 };
 
 const mapFilterActivate = () => {
-  console.log('activate filters');
   mapFilter.removeAttribute('disabled', 'disabled');
   mapFilter.classList.remove('map__filters--disabled');
   for (const mapFilterElement of mapFilterElements) {
@@ -89,13 +86,13 @@ const mapFilterActivate = () => {
 };
 
 const mapFeaturesActivate = () => {
-  console.log('activate features');
   mapFeatures.removeAttribute('disabled', 'disabled');
   mapFeatures.classList.remove('map__features--disabled');
 };
 
-const setFormActive = () => {
-  adFormActivate();
+const setFilterActive = () => {
+  mapFilterActivate();
+  mapFeaturesActivate();
 };
 
 inputTitle.addEventListener('input', () => {
@@ -192,4 +189,4 @@ const setAdFormSubmit = () => {
 
 setAdFormSubmit();
 
-export { setFormDisabled, setFormActive, mapFilterActivate, mapFeaturesActivate, inputAddress, mapFilter };
+export { setFormDisabled, adFormActivate, setFilterActive, inputAddress, mapFilter };

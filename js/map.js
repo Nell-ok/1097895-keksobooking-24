@@ -1,4 +1,4 @@
-import { setFormDisabled, setFormActive, mapFilterActivate, mapFeaturesActivate, inputAddress, mapFilter } from './form.js';
+import { setFormDisabled, adFormActivate, setFilterActive, inputAddress, mapFilter } from './form.js';
 import { createPopup } from './popup.js';
 import { getData } from './api.js';
 import { comparesValuesOffers } from './filter.js';
@@ -14,19 +14,48 @@ const PIN_SIZES = [40, 40];
 const PIN_ANCHORS = [20, 40];
 const SIMILAR_OFFER_COUNT = 10;
 const RERENDER_DELAY = 500;
+
+const pinIcon = L.icon({
+  iconUrl: 'img/pin.svg',
+  iconSize: PIN_SIZES,
+  iconAnchor: PIN_ANCHORS,
+});
+
+let layerGroup = null;
+let mapCanvas = null;
+
 let localOffers = [];
+
+const createOffers = (similarOffers) => {
+  layerGroup = L.layerGroup().addTo(mapCanvas);
+  similarOffers.filter(comparesValuesOffers)
+    .slice(0, SIMILAR_OFFER_COUNT)
+    .forEach((offer) => {
+      const pinMarker = L.marker(
+        {
+          lat: offer.location.lat,
+          lng: offer.location.lng,
+        },
+        {
+          icon: pinIcon,
+        },
+      );
+
+      pinMarker
+        .addTo(layerGroup)
+        .bindPopup(createPopup(offer));
+    });
+};
 
 setFormDisabled();
 
-const mapCanvas = L.map('map-canvas')
+mapCanvas = L.map('map-canvas')
   .on('load', () => {
-    console.log('load map');
-    setFormActive();
+    adFormActivate();
     getData((offers) => {
       localOffers = offers.slice();
       createOffers(localOffers);
-      mapFilterActivate();
-      mapFeaturesActivate();
+      setFilterActive();
     });
     inputAddress.value = `${LATITUDE_COORDINATE}, ${LONGITUDE_COORDINATE}`;
   })
@@ -67,42 +96,6 @@ mainPinMarker.on('moveend', (evt) => {
   const longitudeCoordinate = coordinateObject.lat.toFixed(NUMBER_CHARACTERS_COORDINATE);
   inputAddress.value = `${latitudeCoordinate}, ${longitudeCoordinate}`;
 });
-
-const pinIcon = L.icon({
-  iconUrl: 'img/pin.svg',
-  iconSize: PIN_SIZES,
-  iconAnchor: PIN_ANCHORS,
-});
-
-const layerGroup = L.layerGroup().addTo(mapCanvas);
-
-const createOffers = (similarOffers) => {
-  console.log('offers');
-  similarOffers.filter(comparesValuesOffers)
-    .slice(0, SIMILAR_OFFER_COUNT)
-    .forEach((offer) => {
-      const pinMarker = L.marker(
-        {
-          lat: offer.location.lat,
-          lng: offer.location.lng,
-        },
-        {
-          icon: pinIcon,
-        },
-      );
-
-      pinMarker
-        .addTo(layerGroup)
-        .bindPopup(createPopup(offer));
-    });
-};
-
-/*getData((offers) => {
-  localOffers = offers.slice();
-  createOffers(localOffers);
-  mapFilterActivate();
-  mapFeaturesActivate();
-});*/
 
 const setFilterClickHandler = (callback) => {
   mapFilter.addEventListener('change', () => {
