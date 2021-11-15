@@ -90,8 +90,7 @@ const mapFeaturesActivate = () => {
   mapFeatures.classList.remove('map__features--disabled');
 };
 
-const setFormActive = () => {
-  adFormActivate();
+const setFilterActive = () => {
   mapFilterActivate();
   mapFeaturesActivate();
 };
@@ -190,4 +189,4 @@ const setAdFormSubmit = () => {
 
 setAdFormSubmit();
 
-export { setFormDisabled, setFormActive, inputAddress, mapFilter };
+export { setFormDisabled, adFormActivate, setFilterActive, inputAddress, mapFilter };
